@@ -26,9 +26,8 @@ const ViewCard = () => {
     <div className="view-card-container">
       {card ? (
         <div className="card-content">
-          <h2>Christmas Card</h2>
           <p>From: {card.name}</p>
-          <p>Message: {card.message}</p>
+          <p className="message"> {card.message}</p>
         </div>
       ) : (
         <p>Loading...</p>
