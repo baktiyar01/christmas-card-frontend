@@ -1,89 +1,170 @@
-.input-form-container {
-  max-width: 400px;
-  margin: auto;
+
+body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+body {
+  
+  height: 100vh;
+  background-image: url("./components/christmas-card.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.form {
+  background-color: #15172b;;
+  border-radius: 20px;
+  box-sizing: border-box;
+  height: 500px;
   padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  justify-content: center; 
+  margin: 10% auto;
+  
 }
 
-input,
-textarea {
+.title {
+  color: #eee;
+  font-family: sans-serif;
+  font-size: 36px;
+  font-weight: 600;
+  margin-top: 30px;
+}
+
+.subtitle {
+  color: #eee;
+  font-family: sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.input-container {
+  height: 50px;
+  position: relative;
   width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
 }
 
-button {
-  background-color: #4caf50;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
+.ic1 {
+  margin-top: 40px;
+}
+
+.ic2 {
+  margin-top: 30px;
+}
+
+.input {
+  background-color: #303245;
+  border-radius: 12px;
+  border: 0;
+  box-sizing: border-box;
+  color: #eee;
+  font-size: 18px;
+  height: 100%;
+  outline: 0;
+  padding: 4px 20px 0;
+  width: 100%;
+}
+
+.cut {
+  background-color: #15172b;
+  border-radius: 10px;
+  height: 20px;
+  left: 20px;
+  position: absolute;
+  top: -20px;
+  transform: translateY(0);
+  transition: transform 200ms;
+  width: 76px;
+}
+
+.cut-short {
+  width: 50px;
+}
+
+.input:focus ~ .cut,
+.input:not(:placeholder-shown) ~ .cut {
+  transform: translateY(8px);
+}
+
+.placeholder {
+  color: #65657b;
+  font-family: sans-serif;
+  left: 20px;
+  line-height: 14px;
+  pointer-events: none;
+  position: absolute;
+  transform-origin: 0 50%;
+  transition: transform 200ms, color 200ms;
+  top: 20px;
+}
+
+.input:focus ~ .placeholder,
+.input:not(:placeholder-shown) ~ .placeholder {
+  transform: translateY(-30px) translateX(10px) scale(0.75);
+}
+
+.input:not(:placeholder-shown) ~ .placeholder {
+  color: #808097;
+}
+
+.input:focus ~ .placeholder {
+  color: #dc2f55;
+}
+
+.submit {
+  background-color: #08d;
+  border-radius: 12px;
+  border: 0;
+  box-sizing: border-box;
+  color: #eee;
   cursor: pointer;
-}
-
-button:hover {
-  background-color: #45a049;
-}
-
-button:active {
-  background-color: #3e8e41;
-}
-
-h2{
+  font-size: 18px;
+  height: 50px;
+  margin-top: 38px;
   text-align: center;
+  width: 100%;
 }
 
-article {
-    height: 100%;
-    position: relative;
-    overflow: hidden;
+.submit:active {
+  background-color: #06b;
 }
-
-h1 {
-    font-size: 80px;
-    color: white;
-    text-align: center;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: fit-content;
-    margin: auto;
-}
-
 .view-card-container {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  background-image: url("./components/christmas-card.jpeg");
-  background-size: cover;
+  min-height: 100vh;
+  width: 100%;
+  background-image: url("./components/christmas-card-send.png");
+  background-size: 100% 100%;
   color: white;
-  font-family: 'Your Christmas Font', sans-serif; 
+  font-family: 'Your Christmas Font', sans-serif;
+  box-sizing: border-box;
+  background-attachment: fixed;
 }
-
 .card-content {
   text-align: center;
-  margin-top: 5%;
+  margin-bottom: 30px;
+  font-family: monospace;
   font-size: 1.5rem; 
 }
-.message{
-  font-size: 80px;
- 
+.card-message{
+  font-size: 70px; 
 }
 
-
-@media screen and (max-width: 768px) {
-  .view-card-container {
-    height: auto; 
+@media only screen and (max-width: 600px) {
+  .card-message {
+    font-size: 50px; 
   }
+    .card-content{
+      margin-bottom: 30%;
+    }
 
-  .card-content {
-    padding-bottom: 40px;
-    font-size: 1.2rem; 
-  }
 }

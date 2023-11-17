@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import christmas from "./christmas-card.jpeg";
 import { sendEmail, saveCard } from "../utils/utils";
 import { Link } from "react-router-dom";
 
@@ -13,18 +12,27 @@ const InputForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const createdCard = await saveCard(name, email, message);
+    let createdCard;
 
-    // Assuming createdCard contains information about the card, including an ID
+    try {
+      createdCard = await saveCard(name, email, message);
+    } catch (error) {
+      console.log("Error crearing card", error);
+    }
+
+    if (!createdCard) {
+      console.log("createdCard is empty");
+      return;
+    }
+
+    console.log(createdCard);
+
     const cardId = createdCard.id;
 
-    // Generate the link for viewing the Christmas card
     const link = `/get-card/${cardId}`;
 
-    // Set the link in state
     setCardMessageUrl(link);
 
-    // Uncomment the line below to send an email
     sendEmail(
       name,
       email,
@@ -32,88 +40,84 @@ const InputForm = () => {
       `${process.env.REACT_APP_DEPLOY_URL}${link}`
     );
 
-    // Set the sent state to true
     setSent(true);
 
-    // Clear the form fields
     setName("");
     setEmail("");
     setMessage("");
   };
 
   const handleBack = () => {
-    setSent(false); // Reset the sent state to false when the user clicks the back button
+    setSent(false);
   };
-
   return (
     <div>
-      <h2>Send Christmas Wishes</h2>
       {!sent ? (
-        <div
-          style={{
-            backgroundImage: `url(${christmas})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            minHeight: "100vh",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <div
-            style={{
-              width: "300px",
-              padding: "10px",
-              marginBottom: "10px",
-              border: "none",
-              borderRadius: "5px",
-              margin: "60px",
-            }}
-          >
+        <div className="form">
+          <div className="title">Send your wish</div>
+          <div className="input-container ic1">
             <input
               type="text"
-              placeholder="Your Name"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              className="input"
+              placeholder=" "
               required
             />
-
+            <div className="cut"></div>
+            <label htmlFor="firstname" className="placeholder">
+              Your name
+            </label>
+          </div>
+          <div className="input-container ic2">
             <textarea
               name="message"
-              placeholder="Wishes"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
+              className="input"
+              placeholder=" "
               required
             />
+            <div className="cut"></div>
+            <label htmlFor="message" className="placeholder">
+              Whishes
+            </label>
           </div>
+          <div className="input-container ic2">
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="input"
+              placeholder=" "
+              required
+            />
+            <div className="cut cut-short"></div>
+            <label htmlFor="email" className="placeholder">
+              Email
+            </label>
+          </div>
+          <button onClick={handleSubmit} type="submit" className="submit">
+            Send Wishes
+          </button>
         </div>
       ) : (
-        <div>
-          <p>Your Christmas card has been sent!</p>
-          <Link to={cardMessageUrl} target="_blank" rel="noopener noreferrer">
+        <div className="form">
+          <p className="title">Your Christmas card has been sent!</p>
+          <Link
+            to={cardMessageUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="title"
+          >
             Click here to view your Christmas card
           </Link>
           <br />
-          <button onClick={handleBack}>Back</button>
+          <button onClick={handleBack} className="submit">
+            Back
+          </button>
         </div>
       )}
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        required
-        style={{
-          width: "300px",
-          padding: "10px",
-          marginBottom: "10px",
-          border: "none",
-          borderRadius: "5px",
-        }}
-      />
-      <button onClick={handleSubmit} type="submit">
-        Send Wishes
-      </button>
     </div>
   );
 };

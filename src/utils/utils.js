@@ -9,7 +9,6 @@ export const sendEmail = (name, targetEmail, message, link) => {
   const templateParams = {
     from_name: name,
     from_email: targetEmail,
-    to_name: "Test",
     message: message,
     link: link,
   };
