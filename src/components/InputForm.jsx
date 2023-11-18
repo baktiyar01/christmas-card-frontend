@@ -1,31 +1,32 @@
 import React, { useState } from "react";
 import { sendEmail, saveCard } from "../utils/utils";
 import { Link } from "react-router-dom";
-
+import Loader from "./Loader";
 const InputForm = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [cardMessageUrl, setCardMessageUrl] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     let createdCard;
 
     try {
       createdCard = await saveCard(name, email, message);
     } catch (error) {
       console.log("Error crearing card", error);
+      setLoading(false);
+      return;
     }
 
     if (!createdCard) {
       console.log("createdCard is empty");
       return;
     }
-
-    console.log(createdCard);
 
     const cardId = createdCard.id;
 
@@ -41,7 +42,7 @@ const InputForm = () => {
     );
 
     setSent(true);
-
+    setLoading(false);
     setName("");
     setEmail("");
     setMessage("");
@@ -52,7 +53,9 @@ const InputForm = () => {
   };
   return (
     <div>
-      {!sent ? (
+      {loading ? (
+        <Loader />
+      ) : !sent ? (
         <div className="form">
           <div className="title">Send your wish</div>
           <div className="input-container ic1">
@@ -97,7 +100,12 @@ const InputForm = () => {
               Email
             </label>
           </div>
-          <button onClick={handleSubmit} type="submit" className="submit">
+          <button
+            onClick={handleSubmit}
+            type="submit"
+            className="submit"
+            disabled={loading}
+          >
             Send Wishes
           </button>
         </div>

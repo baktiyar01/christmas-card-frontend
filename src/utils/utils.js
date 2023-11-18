@@ -2,9 +2,9 @@ import emailjs from "@emailjs/browser";
 import axios from "axios";
 
 export const sendEmail = (name, targetEmail, message, link) => {
-  const serviceId = "service_y2h4gw8";
-  const templateId = "template_dbamecw";
-  const publicKey = "XskjfPvOezdVJzXk0";
+  const serviceId = process.env.REACT_APP_SERVICE_ID;
+  const templateId = process.env.REACT_APP_TEMPLATE_ID;
+  const publicKey = process.env.REACT_APP_PUBLIC_KEY;
 
   const templateParams = {
     from_name: name,

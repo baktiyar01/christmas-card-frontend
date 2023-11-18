@@ -158,6 +158,13 @@ body {
 .card-message{
   font-size: 70px; 
 }
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
 
 @media only screen and (max-width: 600px) {
   .card-message {

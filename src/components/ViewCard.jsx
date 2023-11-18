@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import Loader from "./Loader";
 
 const ViewCard = () => {
   const { cardId } = useParams();
@@ -31,7 +32,7 @@ const ViewCard = () => {
           <p className="card-name">From: {card.name}</p>
         </div>
       ) : (
-        <p>Loading...</p>
+        <Loader />
       )}
     </div>
   );
