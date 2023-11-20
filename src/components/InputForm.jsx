@@ -9,9 +9,14 @@ const InputForm = () => {
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [cardMessageUrl, setCardMessageUrl] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!name || !email || !message) {
+      setErrorMessage("Please fill in all the fields: Name, Email, and Wishes");
+      return;
+    }
     setLoading(true);
     let createdCard;
 
@@ -46,6 +51,7 @@ const InputForm = () => {
     setName("");
     setEmail("");
     setMessage("");
+    setErrorMessage("");
   };
 
   const handleBack = () => {
@@ -57,6 +63,7 @@ const InputForm = () => {
         <Loader />
       ) : !sent ? (
         <div className="form">
+          {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
           <div className="title">Send your wish</div>
           <div className="input-container ic1">
             <input
